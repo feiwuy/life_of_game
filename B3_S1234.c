@@ -71,6 +71,7 @@ void Print_Data(int** data) {
         }
         printf("\n");
     }
+    printf("\033[22A");
 }
 
 int main() {
@@ -80,13 +81,11 @@ int main() {
     data = Init_Coordinate(data);
 
     // 处理数据
-    system("clear");
     for (int i = 0;i < 100;i++) {
         data = Data_Progress(data); 
         printf("第%d轮",i);
         Print_Data(data);
         sleep(1);
-        system("clear");
     }
 
 

@@ -3,8 +3,9 @@
 #include <unistd.h>
 
 #define n 22 // 除去外围后为20x20
-#define live_min 2 // 0 和 3个1, 0 变 1
-#define live_max 3 // 除了3以外, 1 变 0
+#define B2 2 // 0 和 3个1, 0 变 1
+#define S2 2
+#define S3 3 // 除了3以外, 1 变 0
 
 int** Init_Data() {
     // 初始化表格数据22x22个0
@@ -44,8 +45,8 @@ int** Data_Progress(int** data) {
             if (*(*(data+i+1)+j-1)) one_num++;
             if (*(*(data+i+1)+j)) one_num++;
             if (*(*(data+i+1)+j+1)) one_num++;
-            if  ((*(*(data+i)+j) == 1) && ((one_num == live_max) || (one_num == live_min))) *(*(new_data+i)+j) = 1;
-            else if ((*(*(data+i)+j) == 0) && (one_num == live_max)) *(*(new_data+i)+j) = 1;
+            if  ((*(*(data+i)+j) == 1) && ((one_num == S2) || (one_num == S3))) *(*(new_data+i)+j) = 1;
+            else if ((*(*(data+i)+j) == 0) && (one_num == B2)) *(*(new_data+i)+j) = 1;
             else *(*(new_data+i)+j) = 0;
         }
     }
@@ -71,6 +72,8 @@ void Print_Data(int** data) {
         }
         printf("\n");
     }
+    //通过覆盖原内容实现原地刷新
+    printf("\033[22A"); // 20+2(第n次\n-----------------------\n)
 }
 
 int main() {
@@ -79,14 +82,12 @@ int main() {
     // 定义初始坐标
     data = Init_Coordinate(data);
 
-    // 处理数据
-    system("clear");
+    // 计算并输出结果
     for (int i = 0;i < 100;i++) {
         data = Data_Progress(data); 
         printf("第%d轮",i);
         Print_Data(data);
         sleep(1);
-        system("clear");
     }
 
 
