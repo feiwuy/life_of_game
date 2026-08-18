@@ -26,6 +26,5 @@ gcc -o life_visual life_game_visual.c -lraylib -lm
 ./life_visual
 
 
-
--------------------------------------------
+```
 By: DeepSeek 网页端
